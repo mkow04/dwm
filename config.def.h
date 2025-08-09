@@ -84,6 +84,12 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
+static const char *upbrightness[]   = { "brightnessctl", "set", "+100", NULL };
+static const char *downbrightness[] = { "brightnessctl", "set", "100-", NULL };
+static const char *upvolume[]   = { "wpctl", "set-volume", "@DEFAULT_SINK@", "0.05+", NULL };
+static const char *downvolume[]   = { "wpctl", "set-volume", "@DEFAULT_SINK@", "0.05-", NULL };
+static const char *mutevolume[]   = { "wpctl", "set-mute", "@DEFAULT_SINK@", "toggle", NULL };
+static const char *mutemic[]   = { "wpctl", "set-mute", "@DEFAULT_SOURCE@", "toggle", NULL };
 
 #include "exitdwm.c"
 static const Key keys[] = {
@@ -126,6 +132,12 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_e,      exitdwm,        {0} },
 	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} }, 
+	{ 0,            XF86XK_MonBrightnessUp,    spawn,          {.v = upbrightness } },
+	{ 0,            XF86XK_MonBrightnessDown,  spawn,          {.v = downbrightness } },
+	{ 0,            XF86XK_AudioRaiseVolume,   spawn,          {.v = upvolume } },
+	{ 0,            XF86XK_AudioLowerVolume,   spawn,          {.v = downvolume } },
+	{ 0,            XF86XK_AudioMute,          spawn,          {.v = mutevolume } },
+	{ 0,            XF86XK_AudioMicMute,       spawn,          {.v = mutemic } },
 };
 
 /* button definitions */
